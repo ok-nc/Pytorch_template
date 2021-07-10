@@ -34,7 +34,8 @@ def evaluate_from_model(model_dir):
                                                               batch_size=flags.batch_size,
                                                               normalize_input=flags.normalize_input,
                                                               data_dir=flags.data_dir,
-                                                              test_ratio=0.999)
+                                                              test_ratio=0.999,
+                                                              data_type=flags.data_type)
 
     print("Making network now")
 

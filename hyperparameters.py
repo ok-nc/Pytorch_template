@@ -2,7 +2,7 @@
 Parameter file for specifying the running parameters for forward model
 """
 # Model Architectural Parameters
-LINEAR = [4, 250, 250, 250]
+LINEAR = [4, 250, 250, 500]
 USE_CONV = False
 CONV_OUT_CHANNEL = [4, 4, 4]
 CONV_KERNEL_SIZE = [8, 5, 5]
@@ -27,9 +27,9 @@ LR_WARM_RESTART = 200
 # Data Specific parameters
 X_RANGE = [i for i in range(0, 4)]
 Y_RANGE = [i for i in range(1, 1001,2)]
-FREQ_LOW = 0.8
-FREQ_HIGH = 1.5
-NUM_SPEC_POINTS = 300
+FREQ_LOW = 20.02
+FREQ_HIGH = 40
+NUM_SPEC_POINTS = 500
 FORCE_RUN = True
 DATA_DIR = ''                # For local usage
 # DATA_DIR = 'C:/Users/labuser/'                # For Omar office desktop usage
@@ -39,6 +39,7 @@ DATA_DIR = ''                # For local usage
 GEOBOUNDARY =[1.3, 0.975, 6, 34.539, 2.4, 3, 7, 43.749]
 NORMALIZE_INPUT = True
 TEST_RATIO = 0.2
+DATA_TYPE = 'Abs'
 
 # Running specific
 USE_CPU_ONLY = False

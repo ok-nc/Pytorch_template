@@ -178,7 +178,7 @@ def importData(data_dir, file_select):
 
 def generate_torch_dataloader(x_range, y_range, geoboundary, normalize_input=True,
                               data_dir=os.path.abspath(''), batch_size=128,
-                              rand_seed=1234, test_ratio = 0.2, shuffle = True, dataset_size=0):
+                              rand_seed=1234, test_ratio = 0.2, shuffle = True, data_type='Trans', dataset_size=0):
     """
 
       :param batch_size: size of the batch read every time
@@ -192,13 +192,18 @@ def generate_torch_dataloader(x_range, y_range, geoboundary, normalize_input=Tru
     # Import data files
     print('Importing data files...')
     geom = importData(os.path.join(data_dir, 'training_data'), 'inputs')
-    s11_re = importData(os.path.join(data_dir, 'training_data'), 'S11(Re)')
-    s11_im = importData(os.path.join(data_dir, 'training_data'), 'S11(Im)')
-    s21_re = importData(os.path.join(data_dir, 'training_data'), 'S21(Re)')
-    s21_im = importData(os.path.join(data_dir, 'training_data'), 'S21(Im)')
-    s11 = np.expand_dims(s11_re + 1j * s11_im, axis=2)
-    s21 = np.expand_dims(s21_re - 1j * s21_im, axis=2)
-    scat = np.concatenate((s11,s21),axis=2)
+
+    if data_type == 'S-param':
+        s11_re = importData(os.path.join(data_dir, 'training_data'), 'S11(Re)')
+        s11_im = importData(os.path.join(data_dir, 'training_data'), 'S11(Im)')
+        s21_re = importData(os.path.join(data_dir, 'training_data'), 'S21(Re)')
+        s21_im = importData(os.path.join(data_dir, 'training_data'), 'S21(Im)')
+        s11 = np.expand_dims(s11_re + 1j * s11_im, axis=2)
+        s21 = np.expand_dims(s21_re - 1j * s21_im, axis=2)
+        scat = np.concatenate((s11,s21),axis=2)
+
+    else:
+        scat = importData(os.path.join(data_dir, 'training_data'), data_type)
 
     # indices = y_range
     indices = []
@@ -220,13 +225,18 @@ def generate_torch_dataloader(x_range, y_range, geoboundary, normalize_input=Tru
     else:
         print("Using separate file from dataIn/Eval as test set")
         geom_Te = importData(os.path.join(data_dir, 'training_data', 'eval'), 'inputs')
-        s11_re = importData(os.path.join(data_dir, 'training_data', 'eval'), 'S11(Re)')
-        s11_im = importData(os.path.join(data_dir, 'training_data', 'eval'), 'S11(Im)')
-        s21_re = importData(os.path.join(data_dir, 'training_data', 'eval'), 'S21(Re)')
-        s21_im = importData(os.path.join(data_dir, 'training_data', 'eval'), 'S21(Im)')
-        s11 = np.expand_dims(s11_re + 1j * s11_im, axis=2)
-        s21 = np.expand_dims(s21_re - 1j * s21_im, axis=2)
-        scat_Te = np.concatenate((s11, s21), axis=2)
+        if data_type == 'S-param':
+            s11_re = importData(os.path.join(data_dir, 'training_data', 'eval'), 'S11(Re)')
+            s11_im = importData(os.path.join(data_dir, 'training_data', 'eval'), 'S11(Im)')
+            s21_re = importData(os.path.join(data_dir, 'training_data', 'eval'), 'S21(Re)')
+            s21_im = importData(os.path.join(data_dir, 'training_data', 'eval'), 'S21(Im)')
+            s11 = np.expand_dims(s11_re + 1j * s11_im, axis=2)
+            s21 = np.expand_dims(s21_re - 1j * s21_im, axis=2)
+            scat_Te = np.concatenate((s11, s21), axis=2)
+        else:
+            scat_Te = importData(os.path.join(data_dir, 'training_data', 'eval'), data_type)
+        geom_Tr = geom_Te
+        scat_Tr = scat_Te
 
     print('Generating torch datasets')
 

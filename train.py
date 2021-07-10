@@ -31,6 +31,7 @@ def training_from_flag(flags):
                                                               normalize_input=flags.normalize_input,
                                                               data_dir=flags.data_dir,
                                                               test_ratio=flags.test_ratio,
+                                                              data_type=flags.data_type,
                                                               dataset_size=flags.data_reduce)
 
 
