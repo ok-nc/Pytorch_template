@@ -67,6 +67,7 @@ def read_flag():
                         help='whether we should normalize the input or not')
     parser.add_argument('--test-ratio', default=TEST_RATIO, type=float, help='the ratio of test case')
     parser.add_argument('--data-type', default=DATA_TYPE, type=str, help='type of simulation data')
+    parser.add_argument('--data-reduce', default=DATA_REDUCE, type=int, help='reduce size of dataset')
 
     # Running specific
     parser.add_argument('--eval-model', default=EVAL_MODEL, type=str,

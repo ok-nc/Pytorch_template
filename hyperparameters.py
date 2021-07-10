@@ -40,6 +40,7 @@ GEOBOUNDARY =[1.3, 0.975, 6, 34.539, 2.4, 3, 7, 43.749]
 NORMALIZE_INPUT = True
 TEST_RATIO = 0.2
 DATA_TYPE = 'Abs'
+DATA_REDUCE = 0
 
 # Running specific
 USE_CPU_ONLY = False
